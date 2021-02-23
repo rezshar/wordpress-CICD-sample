@@ -1,0 +1,8 @@
+version: '3.3'
+
+services:
+   wordpress-test:
+     image: wordpress:latest
+     restart: always
+     volumes:
+       - ./php/:/var/www/html/

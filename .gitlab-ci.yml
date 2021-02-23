@@ -1,0 +1,25 @@
+stages:
+  - test
+  - deploy
+
+test:
+  stage: test
+
+  script:
+    - docker-compose -f test.yml up --build -d
+    - docker exec -i wp_wordpress-test_1 find . -type f -name '*.php' -exec php -l {} \; | (! grep -v "No syntax errors detected" )
+
+
+
+deploy:
+  stage: deploy
+  script:
+
+
+
+    - docker-compose -f project.yml up --build -d
+
+
+  after_script:
+    - docker system prune --force
+    - docker image prune --all --force
